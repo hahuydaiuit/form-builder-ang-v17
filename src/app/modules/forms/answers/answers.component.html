@@ -1,0 +1,27 @@
+<div class="container">
+  @for (question of data; track question; let i = $index) { @if
+  (question.questionType === QUESTION_KEY.PARAGRAPH) {
+  <div class="flex flex-column">
+    <label>{{ question.questionContent }} </label>
+    <p>{{ question.answers }}</p>
+  </div>
+  } @else {
+  <div class="flex flex-column mt-10">
+    <label>{{ question.questionContent }} </label>
+    <ul>
+      @for (answer of question.answers; track answer; let j = $index) { @if
+      (answer.checkbox) {
+      <li>
+        {{ answer?.answer }}
+        @if (answer.isOther) {
+        {{ question.other }}
+        }
+      </li>
+      } }
+    </ul>
+  </div>
+  } }
+  <button mat-button color="primary" (click)="backToBuilder()">
+    Back to builder
+  </button>
+</div>

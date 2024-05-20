@@ -1,0 +1,15 @@
+.mt-10 {
+  margin-top: 10px;
+}
+
+.delete-icon {
+  position: relative;
+  top: -10px;
+  color: #e95555;
+  cursor: pointer;
+
+  &.disabled {
+    color: inherit;
+    cursor: not-allowed;
+  }
+}

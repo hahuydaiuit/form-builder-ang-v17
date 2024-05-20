@@ -1,0 +1,23 @@
+.dialog-action-end {
+  .mat-mdc-dialog-actions {
+    justify-content: end;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.container {
+  margin: 10%;
+  padding: auto;
+  width: 50%;
+}
+
+label {
+  font-weight: bold;
+}

@@ -1,0 +1,80 @@
+<div [formGroup]="form">
+  <h2 mat-dialog-title>Add a New Questions</h2>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Question Type</mat-label>
+      <mat-select formControlName="questionType" ngDefaultControl>
+        @for (questionType1 of questionTypes; track questionType1) {
+        <mat-option [value]="questionType1.value">{{
+          questionType1.viewValue
+        }}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="questionType.hasError('required')">
+        This field is required!
+      </mat-error>
+    </mat-form-field>
+
+    @if(questionType.value) {
+    <mat-form-field>
+      <mat-label>Type question here</mat-label>
+      <input
+        matInput
+        formControlName="questionContent"
+        ngDefaultControl
+        placeholder="Please tell us about yourself"
+        autocomplete="off"
+      />
+      <mat-error *ngIf="questionContent.hasError('required')">
+        This field is required!
+      </mat-error>
+    </mat-form-field>
+    }
+
+    <ng-container formArrayName="answers">
+      @for (answer of answers.controls; track answer) {
+      <div class="flex flex-middle">
+        <mat-form-field [formGroupName]="$index">
+          <mat-label>Add Answer Question</mat-label>
+          <input
+            matInput
+            formControlName="answer"
+            placeholder="Add Answer Question"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <mat-icon
+          class="delete-icon"
+          (click)="deleteAnswer($index)"
+          [ngClass]="{ disabled: answers.length === 1 && $index === 0 }"
+          >delete</mat-icon
+        >
+      </div>
+      }
+    </ng-container>
+
+    @if(questionType.value === QUESTION_KEY.CHECKBOX_LIST) {
+    <button mat-button (click)="addAnswer()" [disabled]="answers.length === 5">
+      + Add another answer
+    </button>
+
+    <mat-checkbox class="mt-10" formControlName="isAllowSpecificOption"
+      >Allow user to specific their own answer</mat-checkbox
+    >
+    } @if(questionType.value) {
+    <mat-checkbox formControlName="isRequired"
+      >This field is required!</mat-checkbox
+    >
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</div>
