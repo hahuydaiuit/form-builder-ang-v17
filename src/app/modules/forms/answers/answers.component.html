@@ -13,8 +13,7 @@
       (answerData(answer, 'checked')) {
       <li>
         {{ answerData(answer, "answer") }}
-        @if (answerData(answer, 'isOther')) {
-        {{ question.other }}
+        @if (answerData(answer, 'isOther')) { - {{ question.other }}
         }
       </li>
       } }
