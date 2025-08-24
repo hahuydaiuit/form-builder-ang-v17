@@ -12,7 +12,7 @@ export class FormSignalService {
     this.data.set(val);
   }
 
-  get DataSignal() {
+  get dataSignal() {
     return this.data();
   }
 
@@ -20,7 +20,7 @@ export class FormSignalService {
     this.view.set(val);
   }
 
-  get wiewSignal() {
+  get viewSignal() {
     return this.view();
   }
 }

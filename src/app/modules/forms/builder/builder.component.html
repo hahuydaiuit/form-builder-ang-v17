@@ -32,7 +32,7 @@
             $index) {
             <ng-container [formGroupName]="j">
               <mat-checkbox
-                formControlName="checkbox"
+                formControlName="checked"
                 (change)="changeCheckBox($event, answer.value, i, j)"
                 >{{ answer.value.answer }}</mat-checkbox
               >

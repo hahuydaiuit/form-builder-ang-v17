@@ -10,10 +10,10 @@
     <label>{{ question.questionContent }} </label>
     <ul>
       @for (answer of question.answers; track answer; let j = $index) { @if
-      (answer.checkbox) {
+      (answerData(answer, 'checked')) {
       <li>
-        {{ answer?.answer }}
-        @if (answer.isOther) {
+        {{ answerData(answer, "answer") }}
+        @if (answerData(answer, 'isOther')) {
         {{ question.other }}
         }
       </li>

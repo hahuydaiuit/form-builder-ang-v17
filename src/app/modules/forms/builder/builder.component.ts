@@ -26,11 +26,19 @@ export class BuilderComponent implements OnInit {
     private readonly router: Router
   ) {
     effect(() => {
-      if (this.formSignalService.DataSignal) {
+      if (this.formSignalService.dataSignal) {
         this.isShowButon = true;
         this.formArray.push(
-          this.createQuestion(this.formSignalService.DataSignal)
+          this.createQuestion(this.formSignalService.dataSignal)
         );
+      } else if (
+        this.formSignalService.viewSignal &&
+        this.formSignalService.viewSignal.length
+      ) {
+        this.isShowButon = true;
+        this.formSignalService.viewSignal.forEach((question) => {
+          this.formArray.push(this.createQuestion(question));
+        });
       }
     });
   }
@@ -77,7 +85,7 @@ export class BuilderComponent implements OnInit {
         this.mapperDataToFormArray(data.answers as IAnswer[]),
         (control) => {
           const atLeastOneChecked = (control as FormArray).controls.find(
-            (x) => x.value.checkbox === true
+            (x) => x.value.checked === true
           );
 
           if (atLeastOneChecked || !data.isRequired) {
@@ -87,12 +95,17 @@ export class BuilderComponent implements OnInit {
         }
       ),
       isRequired: [data.isRequired],
-      other: [''],
-      isShowOther: [false],
+      other: [data.other],
+      isShowOther: [!!data.other],
     });
   }
 
-  changeCheckBox(event: any, answerOption: IAnswer, formArrayIndex: number) {
+  changeCheckBox(
+    event: any,
+    answerOption: IAnswer,
+    formArrayIndex: number,
+    answerIndex: number
+  ) {
     if (answerOption.answer === 'Other' && answerOption?.isOther) {
       this.formArray
         .at(formArrayIndex)
@@ -118,9 +131,10 @@ export class BuilderComponent implements OnInit {
   mapperDataToFormArray(answers: IAnswer[]) {
     return answers.map((answer: IAnswer) =>
       this.formBuilder.group({
-        checkbox: [answer.checked ?? false],
+        checked: [answer.checked ?? false],
         answer: [answer.answer],
         isOther: [answer.isOther],
+        isShowOther: [answer.isOther],
       })
     );
   }
@@ -142,6 +156,7 @@ export class BuilderComponent implements OnInit {
 
   onSave() {
     this.formSignalService.setViewSignal(this.form.value.formArray);
+    this.formSignalService.setDataSignal(null as any);
     this.router.navigate([
       `${ENDROUTERNAME.FORM.FORM}/${ENDROUTERNAME.FORM.ANSWERS}`,
     ]);
