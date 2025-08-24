@@ -6,7 +6,7 @@
       <ng-container [formGroupName]="i">
         @if (question.value.questionType === QUESTION_KEY.PARAGRAPH) {
         <div class="flex flex-column">
-          <label
+          <label class="mb-10"
             >{{ question.value.questionContent }}
             @if(question.value.isRequired) {
             <span class="required">*</span>
@@ -54,22 +54,22 @@
       </ng-container>
       }
     </ng-container>
-    @if(isShowButon) {
-    <div class="flex flex-end">
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="onSave()"
-        [disabled]="form.invalid"
-      >
-        Save
-      </button>
-    </div>
-    }
   </form>
   }
 
-  <button mat-button color="primary" (click)="addNewQuestion()">
-    Add New Question
-  </button>
+  <div class="flex flex-space-between mt-20">
+    <button mat-button color="primary" (click)="addNewQuestion()">
+      Add New Question
+    </button>
+    @if(isShowButon) {
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="onSave()"
+      [disabled]="form.invalid"
+    >
+      Review my answers >
+    </button>
+    }
+  </div>
 </div>
